@@ -14,5 +14,5 @@ UIDevice.current.setValue(value, forKey: "orientation")
 ### 方法2
 自定义转场动画！
 ## 效果图
-
+![](Resource/Demonstration.gif)
 
