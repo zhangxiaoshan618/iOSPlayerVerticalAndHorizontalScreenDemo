@@ -24,14 +24,29 @@ class SecondFullScreenController: UIViewController {
         return .landscape
     }
     
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return .landscapeRight
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        NotificationCenter.default.addObserver(self, selector: #selector(SecondFullScreenController.deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    func deviceOrientationDidChange() {
         
-        // Do any additional setup after loading the view.
+        if let playView = self.playView {
+            switch UIDevice.current.orientation {
+            case .portrait:
+                if playView.state != .fullScreen {
+                    return
+                }
+                playView.state = .animating
+                dismiss(animated: true) {
+                    playView.state = .small
+                }
+            default:
+                break
+            }
+        }
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -45,5 +60,6 @@ class SecondFullScreenController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 
 }

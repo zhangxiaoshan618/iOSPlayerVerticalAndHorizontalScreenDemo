@@ -21,6 +21,8 @@
 		B3ABE5871F42854F00A32CBE /* SecondPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3ABE5861F42854F00A32CBE /* SecondPlayView.swift */; };
 		B3ABE5891F42859700A32CBE /* SecondEnterFullScreenTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3ABE5881F42859700A32CBE /* SecondEnterFullScreenTransition.swift */; };
 		B3ABE58B1F4285C100A32CBE /* SecondExitFillScreenTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3ABE58A1F4285C100A32CBE /* SecondExitFillScreenTransition.swift */; };
+		B3ABE58D1F42A98300A32CBE /* SecondLandscapeLeftController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3ABE58C1F42A98300A32CBE /* SecondLandscapeLeftController.swift */; };
+		B3ABE58F1F42BA5E00A32CBE /* SecondLandscapeRightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3ABE58E1F42BA5E00A32CBE /* SecondLandscapeRightController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		B3ABE5861F42854F00A32CBE /* SecondPlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondPlayView.swift; sourceTree = "<group>"; };
 		B3ABE5881F42859700A32CBE /* SecondEnterFullScreenTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondEnterFullScreenTransition.swift; sourceTree = "<group>"; };
 		B3ABE58A1F4285C100A32CBE /* SecondExitFillScreenTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondExitFillScreenTransition.swift; sourceTree = "<group>"; };
+		B3ABE58C1F42A98300A32CBE /* SecondLandscapeLeftController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondLandscapeLeftController.swift; sourceTree = "<group>"; };
+		B3ABE58E1F42BA5E00A32CBE /* SecondLandscapeRightController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondLandscapeRightController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +104,8 @@
 			children = (
 				B3ABE5821F4284C800A32CBE /* SecondSmallController.swift */,
 				B3ABE5841F4284E200A32CBE /* SecondFullScreenController.swift */,
+				B3ABE58E1F42BA5E00A32CBE /* SecondLandscapeRightController.swift */,
+				B3ABE58C1F42A98300A32CBE /* SecondLandscapeLeftController.swift */,
 				B3ABE5861F42854F00A32CBE /* SecondPlayView.swift */,
 				B3ABE5881F42859700A32CBE /* SecondEnterFullScreenTransition.swift */,
 				B3ABE58A1F4285C100A32CBE /* SecondExitFillScreenTransition.swift */,
@@ -139,6 +145,7 @@
 				TargetAttributes = {
 					B3ABE5601F427E5400A32CBE = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 5Y372T28DH;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -182,11 +189,13 @@
 				B3ABE5671F427E5400A32CBE /* ViewController.swift in Sources */,
 				B3ABE5891F42859700A32CBE /* SecondEnterFullScreenTransition.swift in Sources */,
 				B3ABE5871F42854F00A32CBE /* SecondPlayView.swift in Sources */,
+				B3ABE58D1F42A98300A32CBE /* SecondLandscapeLeftController.swift in Sources */,
 				B3ABE57D1F4282BE00A32CBE /* FirstSmallController.swift in Sources */,
 				B3ABE5651F427E5400A32CBE /* AppDelegate.swift in Sources */,
 				B3ABE57F1F4282D600A32CBE /* FirstFullScreenController.swift in Sources */,
 				B3ABE57B1F42805800A32CBE /* MainNavigationController.swift in Sources */,
 				B3ABE5851F4284E200A32CBE /* SecondFullScreenController.swift in Sources */,
+				B3ABE58F1F42BA5E00A32CBE /* SecondLandscapeRightController.swift in Sources */,
 				B3ABE5791F42803600A32CBE /* MainTabBarController.swift in Sources */,
 				B3ABE5831F4284C800A32CBE /* SecondSmallController.swift in Sources */,
 				B3ABE58B1F4285C100A32CBE /* SecondExitFillScreenTransition.swift in Sources */,
@@ -304,6 +313,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 5Y372T28DH;
 				INFOPLIST_FILE = iOSPlayerVerticalAndHorizontalScreenDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -317,6 +327,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 5Y372T28DH;
 				INFOPLIST_FILE = iOSPlayerVerticalAndHorizontalScreenDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

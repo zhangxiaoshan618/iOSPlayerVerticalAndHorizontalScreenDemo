@@ -9,8 +9,10 @@
 import UIKit
 
 class SecondSmallController: UIViewController {
-
+    var isDisplay: Bool = false
     
+    weak var controller: SecondFullScreenController?
+
     lazy var playView:SecondPlayView = {
         let playView = SecondPlayView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200))
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapGesture(sender:)))
@@ -19,10 +21,8 @@ class SecondSmallController: UIViewController {
         return playView
     }()
     
-    var controller: SecondFullScreenController = SecondFullScreenController()
-    
     lazy var label: UIView = {
-        let label = UILabel(frame: CGRect(x: 100, y: 400, width: 300, height: 50))
+        let label = UILabel(frame: CGRect(x: 0, y: 400, width: UIScreen.main.bounds.width, height: 50))
         label.text = "这是自定义转场动画的方式"
         
         label.textColor = UIColor.darkGray
@@ -30,7 +30,7 @@ class SecondSmallController: UIViewController {
     }()
     
     private lazy var backBtn: UIButton = {
-        let btn = UIButton(frame: CGRect(x: 100, y: 500, width: 300, height: 50))
+        let btn = UIButton(frame: CGRect(x: 0, y: 500, width: UIScreen.main.bounds.width, height: 50))
         btn.setTitle("返回", for: .normal)
         btn.setTitleColor(.blue, for: .normal)
         btn.sizeToFit()
@@ -76,19 +76,8 @@ class SecondSmallController: UIViewController {
             return
         }
         
-        playView.state = .animating
-        playView.beforeBounds = playView.bounds
-        playView.beforeCenter = playView.center
-        playView.beforeFrame = playView.frame
-        playView.parentView = playView.superview
-        
-        controller.playView = playView
-        controller.modalPresentationStyle = .fullScreen
-        controller.transitioningDelegate = self
-        present(controller, animated: true) {[weak self] in
-            self?.playView.state = .fullScreen
-        }
-        
+        let controller = SecondLandscapeRightController()
+        present(to: controller)
     }
     
     func exitFullScreen() {
@@ -96,10 +85,26 @@ class SecondSmallController: UIViewController {
             return
         }
         playView.state = .animating
-        controller.dismiss(animated: true) {[weak self] in
+        controller?.dismiss(animated: true) {[weak self] in
             self?.playView.state = .small
         }
         
+    }
+    
+    func present(to controller: SecondFullScreenController) {
+        playView.state = .animating
+        playView.beforeBounds = playView.bounds
+        playView.beforeCenter = playView.center
+        playView.parentView = playView.superview
+        
+        
+        controller.playView = playView
+        controller.modalPresentationStyle = .fullScreen
+        controller.transitioningDelegate = self
+        present(controller, animated: true) {[weak self] in
+            self?.playView.state = .fullScreen
+        }
+        self.controller = controller
     }
     
     override func loadView() {
@@ -112,6 +117,26 @@ class SecondSmallController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(SecondSmallController.deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    func deviceOrientationDidChange() {
+        if !isDisplay {
+            return
+        }
+        
+        switch UIDevice.current.orientation {
+        case .portrait:
+            break
+        case .landscapeLeft:
+            let controller = SecondLandscapeRightController()
+            present(to: controller)
+        case .landscapeRight:
+            let controller = SecondLandscapeLeftController()
+            present(to: controller)
+        default:
+            break
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -124,6 +149,7 @@ class SecondSmallController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        isDisplay = true
         print("DidAppear",view.frame)
     }
     
@@ -144,7 +170,12 @@ class SecondSmallController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        isDisplay = false
         print("DidDisappear", view.frame)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
 }

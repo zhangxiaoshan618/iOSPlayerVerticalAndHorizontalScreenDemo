@@ -11,7 +11,7 @@ import UIKit
 class SecondPlayView: UIView {
 
     weak var parentView: UIView?
-    var beforeFrame: CGRect = CGRect.zero
+    
     var state: PlayViewState = .small
     var beforeBounds: CGRect = CGRect.zero
     var beforeCenter:CGPoint = CGPoint.zero
@@ -39,9 +39,6 @@ class SecondPlayView: UIView {
         super.layoutSubviews()
         imageView.frame = self.bounds
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-    }
+
 
 }

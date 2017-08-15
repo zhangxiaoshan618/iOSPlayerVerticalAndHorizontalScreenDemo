@@ -19,29 +19,35 @@ class SecondExitFillScreenTransition: NSObject {
 
 extension SecondExitFillScreenTransition: UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 5
+        return 0.25
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromView = transitionContext.view(forKey: .from), let toView = transitionContext.view(forKey: .to) else { return }
         
+        // 计算 fromView的最终位置
         let finaleCenter = transitionContext.containerView.convert(playView.beforeCenter, from: nil)
-        print(playView.beforeCenter, finaleCenter)
+
+        // 将 toView 插入fromView的下面，否则动画过程中不会显示toView
         transitionContext.containerView.insertSubview(toView, belowSubview: fromView)
-        UIView.animate(withDuration: 5, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
+        
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
+            
             guard let strongSelf = self else {return}
+            // 让 fromView 返回playView的初始值
             fromView.transform = CGAffineTransform.identity
             fromView.center = finaleCenter
             fromView.bounds = strongSelf.playView.beforeBounds
+            
         }) {[weak self] (_) in
+            
             guard let strongSelf = self else {return}
+            // 动画完成后，将playView添加到竖屏界面上
             strongSelf.playView.frame = strongSelf.playView.frame
             strongSelf.playView.parentView?.addSubview(strongSelf.playView)
-            print("----",self?.playView, self?.playView.parentView, self?.playView.parentView?.subviews)
             fromView.removeFromSuperview()
             transitionContext.completeTransition(true)
+            
         }
-        
-        
     }
 }
