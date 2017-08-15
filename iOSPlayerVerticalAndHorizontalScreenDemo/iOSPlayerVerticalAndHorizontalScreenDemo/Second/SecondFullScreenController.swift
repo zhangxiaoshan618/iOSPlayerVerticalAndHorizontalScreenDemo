@@ -31,13 +31,13 @@ class SecondFullScreenController: UIViewController {
     }
     
     func deviceOrientationDidChange() {
+        if playView?.state != .fullScreen {
+            return
+        }
         
         if let playView = self.playView {
             switch UIDevice.current.orientation {
             case .portrait:
-                if playView.state != .fullScreen {
-                    return
-                }
                 playView.state = .animating
                 dismiss(animated: true) {
                     playView.state = .small

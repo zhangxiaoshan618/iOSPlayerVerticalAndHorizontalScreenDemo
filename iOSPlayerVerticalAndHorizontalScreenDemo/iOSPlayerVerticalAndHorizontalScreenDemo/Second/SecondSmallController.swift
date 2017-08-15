@@ -9,7 +9,6 @@
 import UIKit
 
 class SecondSmallController: UIViewController {
-    var isDisplay: Bool = false
     
     weak var controller: SecondFullScreenController?
 
@@ -87,8 +86,7 @@ class SecondSmallController: UIViewController {
         playView.state = .animating
         controller?.dismiss(animated: true) {[weak self] in
             self?.playView.state = .small
-        }
-        
+        } 
     }
     
     func present(to controller: SecondFullScreenController) {
@@ -121,7 +119,7 @@ class SecondSmallController: UIViewController {
     }
     
     func deviceOrientationDidChange() {
-        if !isDisplay {
+        if playView.state != .small {
             return
         }
         
@@ -149,7 +147,6 @@ class SecondSmallController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        isDisplay = true
         print("DidAppear",view.frame)
     }
     
@@ -170,7 +167,6 @@ class SecondSmallController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        isDisplay = false
         print("DidDisappear", view.frame)
     }
     
