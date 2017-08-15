@@ -9,6 +9,10 @@
 import UIKit
 
 class FirstSmallController: UIViewController {
+    
+    var portraitTransform: CGAffineTransform?
+    var landscapeRightTransform: CGAffineTransform?
+    var landscapeLeftTransform: CGAffineTransform?
 
     lazy var playView: FirstPlayView = {
         let playView = FirstPlayView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200))
@@ -71,6 +75,25 @@ class FirstSmallController: UIViewController {
         view.addSubview(backBtn)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(FirstSmallController.deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    func deviceOrientationDidChange() {
+        
+        switch UIDevice.current.orientation {
+        case .portrait:
+            break
+        case .landscapeLeft:
+            break
+        case .landscapeRight:
+            break
+        default:
+            break
+        }
+    }
+    
     func backBtnClick(with sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
@@ -129,10 +152,14 @@ class FirstSmallController: UIViewController {
             return
         }
         
+    }
+    
+    func present(to controller: FirstFullScreenController) {
         playView.state = .animating
         playView.beforeFrame = contentView.frame
         playView.beforeBounds = contentView.bounds
         playView.beforeCenter = contentView.center
+        portraitTransform = contentView.transform
         
         
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
@@ -142,7 +169,6 @@ class FirstSmallController: UIViewController {
             self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2)) //self!.contentView.transform.rotated(by: CGFloat(Double.pi / 2))
         }) {[weak self] (_) in
             
-            print(self?.contentView, self?.playView)
             self?.playView.state = .fullScreen
             
             self?.present(self!.controller, animated: false, completion: {
@@ -151,7 +177,10 @@ class FirstSmallController: UIViewController {
             })
             
         }
+
     }
+    
+    
     
     func exitFullScreen() {
         if playView.state != .fullScreen {

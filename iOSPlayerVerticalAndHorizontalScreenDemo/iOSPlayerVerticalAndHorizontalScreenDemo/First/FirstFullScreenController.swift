@@ -22,10 +22,6 @@ class FirstFullScreenController: UIViewController {
         return .landscape
     }
     
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return .landscapeRight
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
