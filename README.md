@@ -1,0 +1,2 @@
+# iOSPlayerVerticalAndHorizontalScreenDemo
+这是一个iOS中播放器横竖屏切换的demo。
