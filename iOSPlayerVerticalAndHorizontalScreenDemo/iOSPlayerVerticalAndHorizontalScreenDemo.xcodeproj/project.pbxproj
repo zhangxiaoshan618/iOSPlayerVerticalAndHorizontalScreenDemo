@@ -23,6 +23,8 @@
 		B3ABE58B1F4285C100A32CBE /* SecondExitFillScreenTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3ABE58A1F4285C100A32CBE /* SecondExitFillScreenTransition.swift */; };
 		B3ABE58D1F42A98300A32CBE /* SecondLandscapeLeftController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3ABE58C1F42A98300A32CBE /* SecondLandscapeLeftController.swift */; };
 		B3ABE58F1F42BA5E00A32CBE /* SecondLandscapeRightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3ABE58E1F42BA5E00A32CBE /* SecondLandscapeRightController.swift */; };
+		B3ABE5931F42E23800A32CBE /* FirstLandscapeRightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3ABE5921F42E23800A32CBE /* FirstLandscapeRightController.swift */; };
+		B3ABE5951F42E24B00A32CBE /* FirstLandscapeLeftController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3ABE5941F42E24B00A32CBE /* FirstLandscapeLeftController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		B3ABE58A1F4285C100A32CBE /* SecondExitFillScreenTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondExitFillScreenTransition.swift; sourceTree = "<group>"; };
 		B3ABE58C1F42A98300A32CBE /* SecondLandscapeLeftController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondLandscapeLeftController.swift; sourceTree = "<group>"; };
 		B3ABE58E1F42BA5E00A32CBE /* SecondLandscapeRightController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondLandscapeRightController.swift; sourceTree = "<group>"; };
+		B3ABE5921F42E23800A32CBE /* FirstLandscapeRightController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstLandscapeRightController.swift; sourceTree = "<group>"; };
+		B3ABE5941F42E24B00A32CBE /* FirstLandscapeLeftController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstLandscapeLeftController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,8 @@
 			children = (
 				B3ABE57C1F4282BE00A32CBE /* FirstSmallController.swift */,
 				B3ABE57E1F4282D600A32CBE /* FirstFullScreenController.swift */,
+				B3ABE5921F42E23800A32CBE /* FirstLandscapeRightController.swift */,
+				B3ABE5941F42E24B00A32CBE /* FirstLandscapeLeftController.swift */,
 				B3ABE5801F4282F400A32CBE /* FirstPlayView.swift */,
 			);
 			path = First;
@@ -194,7 +200,9 @@
 				B3ABE5651F427E5400A32CBE /* AppDelegate.swift in Sources */,
 				B3ABE57F1F4282D600A32CBE /* FirstFullScreenController.swift in Sources */,
 				B3ABE57B1F42805800A32CBE /* MainNavigationController.swift in Sources */,
+				B3ABE5931F42E23800A32CBE /* FirstLandscapeRightController.swift in Sources */,
 				B3ABE5851F4284E200A32CBE /* SecondFullScreenController.swift in Sources */,
+				B3ABE5951F42E24B00A32CBE /* FirstLandscapeLeftController.swift in Sources */,
 				B3ABE58F1F42BA5E00A32CBE /* SecondLandscapeRightController.swift in Sources */,
 				B3ABE5791F42803600A32CBE /* MainTabBarController.swift in Sources */,
 				B3ABE5831F4284C800A32CBE /* SecondSmallController.swift in Sources */,
@@ -356,6 +364,7 @@
 				B3ABE5751F427E5400A32CBE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

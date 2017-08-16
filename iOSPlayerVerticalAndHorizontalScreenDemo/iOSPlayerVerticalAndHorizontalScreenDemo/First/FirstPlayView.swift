@@ -48,6 +48,7 @@ class FirstPlayView: UIView {
     }
     
     override func layoutSubviews() {
+        imageView.frame = bounds
         super.layoutSubviews()
     }
     

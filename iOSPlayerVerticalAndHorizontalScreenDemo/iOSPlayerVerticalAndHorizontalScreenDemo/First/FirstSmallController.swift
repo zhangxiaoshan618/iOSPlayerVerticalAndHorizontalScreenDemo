@@ -9,6 +9,10 @@
 import UIKit
 
 class FirstSmallController: UIViewController {
+    
+    var portraitTransform: CGAffineTransform?
+    var landscapeRightTransform: CGAffineTransform?
+    var landscapeLeftTransform: CGAffineTransform?
 
     lazy var playView: FirstPlayView = {
         let playView = FirstPlayView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200))
@@ -66,9 +70,43 @@ class FirstSmallController: UIViewController {
         
         contentView.addSubview(playView)
         
-        view.addSubview(contentView)
         view.addSubview(label)
         view.addSubview(backBtn)
+        view.addSubview(contentView)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(FirstSmallController.deviceOrientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    func deviceOrientationDidChange() {
+        if playView.state == .small {
+            switch UIDevice.current.orientation {
+            case .portrait:
+                break
+            case .landscapeLeft:
+                present(to: FirstLandscapeLeftController())
+            case .landscapeRight:
+                present(to: FirstLandscapeRightController())
+            default:
+                break
+            }
+        }else if playView.state == .fullScreen {
+            switch UIDevice.current.orientation {
+            case .portrait:
+                dimiss()
+            case .landscapeLeft:
+                contentView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
+            case .landscapeRight:
+                contentView.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi / 2))
+            default:
+                break
+            }
+        }
+        
+        
+        
     }
     
     func backBtnClick(with sender: UIButton) {
@@ -129,20 +167,30 @@ class FirstSmallController: UIViewController {
             return
         }
         
+        present(to: FirstLandscapeLeftController())
+    }
+    
+    func present(to controller: FirstFullScreenController) {
         playView.state = .animating
         playView.beforeFrame = contentView.frame
         playView.beforeBounds = contentView.bounds
         playView.beforeCenter = contentView.center
+        portraitTransform = contentView.transform
         
         
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
+        UIView.animate(withDuration: 0.25, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
             
             self?.contentView.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.height, height: UIScreen.main.bounds.width)
             self?.contentView.center = self!.view.center
-            self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2)) //self!.contentView.transform.rotated(by: CGFloat(Double.pi / 2))
+            
+            if controller is FirstLandscapeRightController {
+                self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi / 2)) //self!.contentView.transform.rotated(by: CGFloat(Double.pi / 2))
+            }else {
+                self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
+            }
+            
         }) {[weak self] (_) in
             
-            print(self?.contentView, self?.playView)
             self?.playView.state = .fullScreen
             
             self?.present(self!.controller, animated: false, completion: {
@@ -151,18 +199,23 @@ class FirstSmallController: UIViewController {
             })
             
         }
+
     }
+    
+    
     
     func exitFullScreen() {
         if playView.state != .fullScreen {
             return
         }
-        
-        
+        dimiss()
+    }
+    
+    func dimiss() {
         self.controller.dismiss(animated: false) {[weak self] in
             self?.playView.removeFromSuperview()
             self?.contentView.addSubview(self!.playView)
-            UIView.animate(withDuration: 0.5, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
+            UIView.animate(withDuration: 0.25, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
                 guard let strongSelf = self else {return}
                 strongSelf.contentView.transform = CGAffineTransform.identity //self!.contentView.transform.rotated(by: CGFloat(-Double.pi / 2))
                 strongSelf.contentView.bounds = strongSelf.playView.beforeBounds
@@ -171,7 +224,6 @@ class FirstSmallController: UIViewController {
                 self?.playView.state = .small
             }
         }
-        
     }
 
 }
