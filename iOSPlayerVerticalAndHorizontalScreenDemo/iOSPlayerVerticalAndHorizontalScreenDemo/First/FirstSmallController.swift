@@ -178,7 +178,7 @@ class FirstSmallController: UIViewController {
         portraitTransform = contentView.transform
         
         
-        UIView.animate(withDuration: 0.5, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
+        UIView.animate(withDuration: 0.25, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
             
             self?.contentView.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.height, height: UIScreen.main.bounds.width)
             self?.contentView.center = self!.view.center
@@ -215,7 +215,7 @@ class FirstSmallController: UIViewController {
         self.controller.dismiss(animated: false) {[weak self] in
             self?.playView.removeFromSuperview()
             self?.contentView.addSubview(self!.playView)
-            UIView.animate(withDuration: 0.5, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
+            UIView.animate(withDuration: 0.25, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
                 guard let strongSelf = self else {return}
                 strongSelf.contentView.transform = CGAffineTransform.identity //self!.contentView.transform.rotated(by: CGFloat(-Double.pi / 2))
                 strongSelf.contentView.bounds = strongSelf.playView.beforeBounds
