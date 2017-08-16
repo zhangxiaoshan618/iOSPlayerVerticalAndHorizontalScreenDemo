@@ -70,9 +70,9 @@ class FirstSmallController: UIViewController {
         
         contentView.addSubview(playView)
         
-        view.addSubview(contentView)
         view.addSubview(label)
         view.addSubview(backBtn)
+        view.addSubview(contentView)
     }
     
     override func viewDidLoad() {

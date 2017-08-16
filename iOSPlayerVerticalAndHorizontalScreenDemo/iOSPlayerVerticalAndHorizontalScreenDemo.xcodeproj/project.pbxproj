@@ -364,6 +364,7 @@
 				B3ABE5751F427E5400A32CBE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
