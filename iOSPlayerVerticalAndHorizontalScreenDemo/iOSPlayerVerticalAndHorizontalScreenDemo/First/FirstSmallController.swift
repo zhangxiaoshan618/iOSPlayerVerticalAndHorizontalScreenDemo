@@ -81,17 +81,32 @@ class FirstSmallController: UIViewController {
     }
     
     func deviceOrientationDidChange() {
-        
-        switch UIDevice.current.orientation {
-        case .portrait:
-            break
-        case .landscapeLeft:
-            break
-        case .landscapeRight:
-            break
-        default:
-            break
+        if playView.state == .small {
+            switch UIDevice.current.orientation {
+            case .portrait:
+                break
+            case .landscapeLeft:
+                present(to: FirstLandscapeLeftController())
+            case .landscapeRight:
+                present(to: FirstLandscapeRightController())
+            default:
+                break
+            }
+        }else if playView.state == .fullScreen {
+            switch UIDevice.current.orientation {
+            case .portrait:
+                dimiss()
+            case .landscapeLeft:
+                contentView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
+            case .landscapeRight:
+                contentView.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi / 2))
+            default:
+                break
+            }
         }
+        
+        
+        
     }
     
     func backBtnClick(with sender: UIButton) {
@@ -152,6 +167,7 @@ class FirstSmallController: UIViewController {
             return
         }
         
+        present(to: FirstLandscapeLeftController())
     }
     
     func present(to controller: FirstFullScreenController) {
@@ -166,7 +182,13 @@ class FirstSmallController: UIViewController {
             
             self?.contentView.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.height, height: UIScreen.main.bounds.width)
             self?.contentView.center = self!.view.center
-            self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2)) //self!.contentView.transform.rotated(by: CGFloat(Double.pi / 2))
+            
+            if controller is FirstLandscapeRightController {
+                self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi / 2)) //self!.contentView.transform.rotated(by: CGFloat(Double.pi / 2))
+            }else {
+                self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
+            }
+            
         }) {[weak self] (_) in
             
             self?.playView.state = .fullScreen
@@ -186,8 +208,10 @@ class FirstSmallController: UIViewController {
         if playView.state != .fullScreen {
             return
         }
-        
-        
+        dimiss()
+    }
+    
+    func dimiss() {
         self.controller.dismiss(animated: false) {[weak self] in
             self?.playView.removeFromSuperview()
             self?.contentView.addSubview(self!.playView)
@@ -200,7 +224,6 @@ class FirstSmallController: UIViewController {
                 self?.playView.state = .small
             }
         }
-        
     }
 
 }
