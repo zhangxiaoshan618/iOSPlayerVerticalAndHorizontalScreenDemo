@@ -22,10 +22,7 @@ class FirstSmallController: UIViewController {
         return playView
     }()
     
-    lazy var controller: FirstFullScreenController = {
-        let controller = FirstFullScreenController()
-        return controller
-    }()
+    weak var controller: FirstFullScreenController?
     
     lazy var contentView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200))
@@ -171,6 +168,7 @@ class FirstSmallController: UIViewController {
     }
     
     func present(to controller: FirstFullScreenController) {
+        self.controller = controller
         playView.state = .animating
         playView.beforeFrame = contentView.frame
         playView.beforeBounds = contentView.bounds
@@ -192,10 +190,10 @@ class FirstSmallController: UIViewController {
         }) {[weak self] (_) in
             
             self?.playView.state = .fullScreen
-            
-            self?.present(self!.controller, animated: false, completion: {
+
+            self?.present(controller, animated: false, completion: {
                 self?.playView.removeFromSuperview()
-                self?.controller.view.addSubview(self!.playView)
+                self?.controller?.view.addSubview(self!.playView)
             })
             
         }
@@ -212,7 +210,7 @@ class FirstSmallController: UIViewController {
     }
     
     func dimiss() {
-        self.controller.dismiss(animated: false) {[weak self] in
+        self.controller?.dismiss(animated: false) {[weak self] in
             self?.playView.removeFromSuperview()
             self?.contentView.addSubview(self!.playView)
             UIView.animate(withDuration: 0.25, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
