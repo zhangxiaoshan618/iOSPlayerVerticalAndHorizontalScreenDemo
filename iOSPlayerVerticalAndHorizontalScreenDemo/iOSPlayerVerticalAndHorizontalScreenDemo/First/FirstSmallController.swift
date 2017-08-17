@@ -182,18 +182,21 @@ class FirstSmallController: UIViewController {
             self?.contentView.center = self!.view.center
             
             if controller is FirstLandscapeRightController {
-                self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi / 2)) //self!.contentView.transform.rotated(by: CGFloat(Double.pi / 2))
+                self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi / 2))
             }else {
                 self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
             }
             
         }) {[weak self] (_) in
             
+            guard let strongSelf = self else {return}
+            
             self?.playView.state = .fullScreen
 
             self?.present(controller, animated: false, completion: {
                 self?.playView.removeFromSuperview()
                 self?.controller?.view.addSubview(self!.playView)
+                controller.view.superview?.insertSubview(strongSelf.view, belowSubview: controller.view)
             })
             
         }
@@ -210,9 +213,8 @@ class FirstSmallController: UIViewController {
     }
     
     func dimiss() {
+        contentView.addSubview(self.playView)
         self.controller?.dismiss(animated: false) {[weak self] in
-            self?.playView.removeFromSuperview()
-            self?.contentView.addSubview(self!.playView)
             UIView.animate(withDuration: 0.25, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
                 guard let strongSelf = self else {return}
                 strongSelf.contentView.transform = CGAffineTransform.identity //self!.contentView.transform.rotated(by: CGFloat(-Double.pi / 2))
