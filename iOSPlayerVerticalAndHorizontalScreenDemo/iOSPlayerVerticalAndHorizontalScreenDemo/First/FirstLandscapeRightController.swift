@@ -11,7 +11,7 @@ import UIKit
 class FirstLandscapeRightController: FirstFullScreenController {
 
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return .landscapeLeft
+        return .landscapeRight
     }
 
 }

@@ -83,9 +83,9 @@ class FirstSmallController: UIViewController {
             case .portrait:
                 break
             case .landscapeLeft:
-                present(to: FirstLandscapeLeftController())
-            case .landscapeRight:
                 present(to: FirstLandscapeRightController())
+            case .landscapeRight:
+                present(to: FirstLandscapeLeftController())
             default:
                 break
             }
@@ -164,7 +164,7 @@ class FirstSmallController: UIViewController {
             return
         }
         
-        present(to: FirstLandscapeLeftController())
+        present(to: FirstLandscapeRightController())
     }
     
     func present(to controller: FirstFullScreenController) {
@@ -181,7 +181,7 @@ class FirstSmallController: UIViewController {
             self?.contentView.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.height, height: UIScreen.main.bounds.width)
             self?.contentView.center = self!.view.center
             
-            if controller is FirstLandscapeRightController {
+            if controller is FirstLandscapeLeftController {
                 self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi / 2))
             }else {
                 self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
@@ -196,7 +196,13 @@ class FirstSmallController: UIViewController {
             self?.present(controller, animated: false, completion: {
                 self?.playView.removeFromSuperview()
                 self?.controller?.view.addSubview(self!.playView)
-                controller.view.superview?.insertSubview(strongSelf.view, belowSubview: controller.view)
+                // 两种方式都可以
+                // 方式一：将当前控制器的view插入到 横屏view的下方
+//                controller.view.superview?.insertSubview(strongSelf.view, belowSubview: controller.view)
+                // 方式二：.overFullScreen的实际效果
+                if let keyWindow = UIApplication.shared.keyWindow,let rootViewController = UIApplication.shared.keyWindow?.rootViewController, let containerView = controller.view.superview  {
+                    keyWindow.insertSubview(rootViewController.view, belowSubview: containerView)
+                }
             })
             
         }

@@ -9,6 +9,7 @@
 import UIKit
 
 class SecondExitFillScreenTransition: NSObject {
+    
     var playView: SecondPlayView
     
     init(with view: SecondPlayView) {
@@ -40,7 +41,6 @@ extension SecondExitFillScreenTransition: UIViewControllerAnimatedTransitioning 
             fromView.bounds = strongSelf.playView.beforeBounds
             
         }) {[weak self] (_) in
-            
             guard let strongSelf = self else {return}
             // 动画完成后，将playView添加到竖屏界面上
             strongSelf.playView.frame = strongSelf.playView.frame

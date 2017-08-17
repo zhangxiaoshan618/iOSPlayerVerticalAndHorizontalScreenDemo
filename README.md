@@ -13,7 +13,34 @@ UIDevice.current.setValue(value, forKey: "orientation")
 竖屏转横屏时：由竖屏控制器做一个播放器由小变大，并且旋转为横屏的动画，动画结束时做一个无动画的present
 横屏转竖屏时：做一个无动画的dimiss,dimiss完成后，依然由竖屏控制器做播放器由大变小并且旋转回原处的动画。
 目前看来，爱奇艺和bilibili貌似使用这个方式，具体表现为竖屏切横屏时，播放器动画完成后，statusBar无动画转为横屏；横屏切竖屏时，statusBar先无动画转为竖屏，然后才开始播放器动画。
-但是目前这个方法有一个问题，就是在横屏转竖屏时，画面偶尔会闪一下（这是一个需要优化的地方），不知道爱奇艺是如何解决的。
+#### 这种方法的坑
+#### 问题
+但是目前这个方法有一个问题，就是在横屏转竖屏时，画面偶尔会闪一下。
+#### 问题分析
+画面偶尔会闪一下，是在默认的模式下，控制器的.modalPresentationStyle = UIModalPresentationStyle.fullScreen,此时，当控制器A present 出控制器B，完成present动作后，控制器B的view会添加进一个UITransitionView类型的View中（即我们在自定义转场动画时的transitionContext.containerView），UITransitionView是直接添加在Window上的，而控制器A的view会暂时从视图层级中移除。当无动画dimiss时，UITransitionView先从Window移除，然后控制器A的View在添加到window上，在这中间有可能会造成闪动。
+所以只要保证完成present动作后，控制器A的view依然保持在视图层级中即可。
+#### 解决方案
+##### 解决方案1
+在UIModalPresentationStyle中有一个枚举类型：.overFullScreen，这个方式的作用就是保证完成present动作后，控制器A的view依然保持在视图层级中。
+所以我们设置控制器B的.modalPresentationStyle = .overFullScreen，测试证明这个属性可以保证完成present动作后，控制器A的view依然保持在视图层级中，但是重力感应的方向不会发生改变。所以这个方案不可用。
+##### 解决方案2
+既然系统没有可以使用的，那我们可以在presen完成后，自己手动把控制器A 的View插入到控制器BView的下边。有两种方式，
+方式一：
+将控制器A的view直接插入到UITransitionView内的控制器B的View下
+```
+// 方式一：将当前控制器的view插入到 横屏view的下方
+controller.view.superview?.insertSubview(strongSelf.view, belowSubview: controller.view)
+```
+方式二：
+将window的rootViewController的View插入到Window之上，UITransitionView之下，这种方式的效果和.overFullScreen的效果一样。
+这两种方式都可以，可以根据实际情况来选择使用
+```
+// 方式二：.overFullScreen的实际效果
+if let keyWindow = UIApplication.shared.keyWindow,let rootViewController = UIApplication.shared.keyWindow?.rootViewController, let containerView = controller.view.superview  {
+                    keyWindow.insertSubview(rootViewController.view, belowSubview: containerView)
+                }
+```
+
 ### 方法2
 自定义转场动画！
 目前看来，腾讯视频有可能使用这个方式。
