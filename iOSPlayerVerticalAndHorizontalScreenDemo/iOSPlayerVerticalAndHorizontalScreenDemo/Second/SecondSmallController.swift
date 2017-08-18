@@ -85,11 +85,14 @@ class SecondSmallController: UIViewController {
         }
         playView.state = .animating
         controller?.dismiss(animated: true) {[weak self] in
+            isAllowLandscape = false
             self?.playView.state = .small
         } 
     }
     
     func present(to controller: SecondFullScreenController) {
+        isAllowLandscape = true
+        
         playView.state = .animating
         playView.beforeBounds = playView.bounds
         playView.beforeCenter = playView.center

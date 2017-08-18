@@ -40,6 +40,7 @@ class SecondFullScreenController: UIViewController {
             case .portrait:
                 playView.state = .animating
                 dismiss(animated: true) {
+                    isAllowLandscape = false
                     playView.state = .small
                 }
             default:
