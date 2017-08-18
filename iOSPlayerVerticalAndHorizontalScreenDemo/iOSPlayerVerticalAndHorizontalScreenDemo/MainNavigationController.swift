@@ -37,7 +37,7 @@ class MainNavigationController: UINavigationController {
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return topViewController?.supportedInterfaceOrientations ?? .allButUpsideDown
+        return topViewController?.supportedInterfaceOrientations ?? .portrait
     }
     
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {

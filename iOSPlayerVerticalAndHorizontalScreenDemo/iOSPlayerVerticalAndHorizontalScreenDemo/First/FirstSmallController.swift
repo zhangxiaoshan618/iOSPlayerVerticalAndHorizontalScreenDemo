@@ -168,9 +168,6 @@ class FirstSmallController: UIViewController {
     }
     
     func present(to controller: FirstFullScreenController) {
-        // 允许 application 横屏
-        isAllowLandscape = true
-        
         self.controller = controller
         playView.state = .animating
         playView.beforeFrame = contentView.frame
@@ -225,7 +222,6 @@ class FirstSmallController: UIViewController {
         
         contentView.addSubview(self.playView)
         self.controller?.dismiss(animated: false) {[weak self] in
-            isAllowLandscape = false
             UIView.animate(withDuration: 0.25, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
                 guard let strongSelf = self else {return}
                 strongSelf.contentView.transform = CGAffineTransform.identity //self!.contentView.transform.rotated(by: CGFloat(-Double.pi / 2))
