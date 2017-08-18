@@ -53,7 +53,7 @@ class MainTabBarController: UITabBarController {
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return selectedViewController?.supportedInterfaceOrientations ?? .allButUpsideDown
+        return selectedViewController?.supportedInterfaceOrientations ?? .portrait
     }
     
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
