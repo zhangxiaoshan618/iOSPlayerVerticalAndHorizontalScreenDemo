@@ -10,7 +10,6 @@ import UIKit
 
 class FirstSmallController: UIViewController {
     
-    var portraitTransform: CGAffineTransform?
     var landscapeRightTransform: CGAffineTransform?
     var landscapeLeftTransform: CGAffineTransform?
 
@@ -101,9 +100,6 @@ class FirstSmallController: UIViewController {
                 break
             }
         }
-        
-        
-        
     }
     
     func backBtnClick(with sender: UIButton) {
@@ -170,10 +166,8 @@ class FirstSmallController: UIViewController {
     func present(to controller: FirstFullScreenController) {
         self.controller = controller
         playView.state = .animating
-        playView.beforeFrame = contentView.frame
         playView.beforeBounds = contentView.bounds
         playView.beforeCenter = contentView.center
-        portraitTransform = contentView.transform
         
         
         UIView.animate(withDuration: 0.25, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
@@ -222,6 +216,7 @@ class FirstSmallController: UIViewController {
         
         contentView.addSubview(self.playView)
         self.controller?.dismiss(animated: false) {[weak self] in
+            self?.playView.state = .animating
             UIView.animate(withDuration: 0.25, delay: 0.0, options: .layoutSubviews, animations: {[weak self] in
                 guard let strongSelf = self else {return}
                 strongSelf.contentView.transform = CGAffineTransform.identity //self!.contentView.transform.rotated(by: CGFloat(-Double.pi / 2))

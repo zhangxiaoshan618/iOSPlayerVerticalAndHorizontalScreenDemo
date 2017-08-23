@@ -19,8 +19,6 @@ class FirstPlayView: UIView {
     var vConstraints: [NSLayoutConstraint]?
     var hConstraints: [NSLayoutConstraint]?
     
-    weak var parentView: UIView?
-    var beforeFrame: CGRect = CGRect.zero
     var state: PlayViewState = .small
     var beforeBounds: CGRect = CGRect.zero
     var beforeCenter:CGPoint = CGPoint.zero
