@@ -48,6 +48,10 @@ extension SecondEnterFullScreenTransition: UIViewControllerAnimatedTransitioning
             toView.center = transitionContext.containerView.center
             
         }) { (_) in
+            // 动画完成后再次设置终点状态，防止动画被打断造成BUG
+            toView.transform = CGAffineTransform.identity
+            toView.bounds = transitionContext.containerView.bounds
+            toView.center = transitionContext.containerView.center
             transitionContext.completeTransition(true)
         }
     }
