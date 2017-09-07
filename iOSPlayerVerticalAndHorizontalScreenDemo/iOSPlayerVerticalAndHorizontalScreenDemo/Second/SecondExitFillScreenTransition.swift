@@ -42,6 +42,11 @@ extension SecondExitFillScreenTransition: UIViewControllerAnimatedTransitioning 
             
         }) {[weak self] (_) in
             guard let strongSelf = self else {return}
+            // 动画完成后再次设置终点状态，防止动画被打断造成BUG
+            fromView.transform = CGAffineTransform.identity
+            fromView.center = finaleCenter
+            fromView.bounds = strongSelf.playView.beforeBounds
+            
             // 动画完成后，将playView添加到竖屏界面上
             strongSelf.playView.frame = strongSelf.playView.frame
             strongSelf.playView.parentView?.addSubview(strongSelf.playView)

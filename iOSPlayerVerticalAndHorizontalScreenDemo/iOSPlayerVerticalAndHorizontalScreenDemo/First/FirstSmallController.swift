@@ -182,6 +182,15 @@ class FirstSmallController: UIViewController {
             }
             
         }) {[weak self] (_) in
+            // 动画完成后再次设置终点状态，防止动画被打断造成BUG
+            self?.contentView.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.height, height: UIScreen.main.bounds.width)
+            self?.contentView.center = self!.view.center
+            
+            if controller is FirstLandscapeLeftController {
+                self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(-Double.pi / 2))
+            }else {
+                self?.contentView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2))
+            }
             
             guard let strongSelf = self else {return}
             
@@ -223,6 +232,11 @@ class FirstSmallController: UIViewController {
                 strongSelf.contentView.bounds = strongSelf.playView.beforeBounds
                 strongSelf.contentView.center = strongSelf.playView.beforeCenter
             }) {[weak self] (_) in
+                guard let strongSelf = self else {return}
+                // 动画完成后再次设置终点状态，防止动画被打断造成BUG
+                strongSelf.contentView.transform = CGAffineTransform.identity //self!.contentView.transform.rotated(by: CGFloat(-Double.pi / 2))
+                strongSelf.contentView.bounds = strongSelf.playView.beforeBounds
+                strongSelf.contentView.center = strongSelf.playView.beforeCenter
                 self?.playView.state = .small
             }
         }
